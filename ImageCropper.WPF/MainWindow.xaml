@@ -1,0 +1,26 @@
+﻿<Window
+    x:Class="ImageCropper.WPF.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:imagecropper="clr-namespace:ImageCropper;assembly=ImageCropper"
+    xmlns:local="clr-namespace:ImageCropper.WPF"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="MainWindow"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <Grid>
+        <imagecropper:ImageCropper
+            x:Name="ImageCropper"
+            CropShape="Rectangular"
+            ThumbPlacement="All" />
+        <Button
+            Width="24"
+            Margin="10"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Click="Button_Click"
+            Content="+" />
+    </Grid>
+</Window>
