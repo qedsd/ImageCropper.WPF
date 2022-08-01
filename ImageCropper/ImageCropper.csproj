@@ -16,13 +16,4 @@
       <Version>6.0.0</Version>
     </PackageReference>
   </ItemGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<OutputPath>..\Libs\</OutputPath>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-		<OutputPath>..\Libs\</OutputPath>
-		<DocumentationFile>..\Libs\ImageCropper.xml</DocumentationFile>
-	</PropertyGroup>
-
 </Project>
