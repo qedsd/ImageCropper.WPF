@@ -12,6 +12,12 @@ namespace ImageCropper
 {
     public partial class ImageCropper
     {
+        /// <summary>
+        /// 释放拖动后的图片移动动画
+        /// </summary>
+        /// <param name="to"></param>
+        /// <param name="duration"></param>
+        /// <param name="target"></param>
         private static void AnimateUIElementOffset(Point to, TimeSpan duration, FrameworkElement target)
         {
             //与uwp原始代码不同，这里的RenderTransform是一个包含了TranslateTransform和ScaleTransform的TransformGroup
@@ -49,7 +55,12 @@ namespace ImageCropper
                 }
             }
         }
-
+        /// <summary>
+        /// 释放拖动后的图片缩放动画
+        /// </summary>
+        /// <param name="to"></param>
+        /// <param name="duration"></param>
+        /// <param name="target"></param>
         private static void AnimateUIElementScale(double to, TimeSpan duration, FrameworkElement target)
         {
             var group = target.RenderTransform as TransformGroup;
@@ -85,13 +96,22 @@ namespace ImageCropper
                 }
             }
         }
-
+        /// <summary>
+        /// 释放拖动后的thumb点移动动画
+        /// </summary>
+        /// <param name="to"></param>
+        /// <param name="duration"></param>
+        /// <param name="target"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="enableDependentAnimation"></param>
+        /// <returns></returns>
         private static DoubleAnimation CreateDoubleAnimation(double to, TimeSpan duration, DependencyObject target, string propertyName, bool enableDependentAnimation)
         {
             var animation = new DoubleAnimation()
             {
                 To = to,
                 Duration = duration,
+                FillBehavior = FillBehavior.HoldEnd,
                 //EnableDependentAnimation = enableDependentAnimation
             };
 
@@ -100,14 +120,23 @@ namespace ImageCropper
 
             return animation;
         }
-
+        /// <summary>
+        /// 圆形选择框时需要用到的中心点缩放动画
+        /// </summary>
+        /// <param name="to"></param>
+        /// <param name="duration"></param>
+        /// <param name="target"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="enableDependentAnimation"></param>
+        /// <returns></returns>
         private static PointAnimation CreatePointAnimation(Point to, TimeSpan duration, DependencyObject target, string propertyName, bool enableDependentAnimation)
         {
             var animation = new PointAnimation()
             {
                 To = to,
                 Duration = duration,
-               // EnableDependentAnimation = enableDependentAnimation
+                FillBehavior = FillBehavior.HoldEnd,
+                // EnableDependentAnimation = enableDependentAnimation
             };
 
             Storyboard.SetTarget(animation, target);

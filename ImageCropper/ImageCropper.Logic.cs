@@ -308,8 +308,6 @@ namespace ImageCropper
                 }
                 else
                 {
-                    //_topThumb.X = centerX;
-                    //_topThumb.Y = _startY;
                     _topThumb.UpdatePosition(centerX, _startY);
                 }
             }
@@ -323,8 +321,6 @@ namespace ImageCropper
                 }
                 else
                 {
-                    //_bottomThumb.X = centerX;
-                    //_bottomThumb.Y = _endY;
                     _bottomThumb.UpdatePosition(centerX, _endY);
                 }
             }
@@ -338,8 +334,6 @@ namespace ImageCropper
                 }
                 else
                 {
-                    //_leftThumb.X = _startX;
-                    //_leftThumb.Y = centerY;
                     _leftThumb.UpdatePosition(_startX, centerY);
                 }
             }
@@ -353,8 +347,6 @@ namespace ImageCropper
                 }
                 else
                 {
-                    //_rightThumb.X = _endX;
-                    //_rightThumb.Y = centerY;
                     _rightThumb.UpdatePosition(_endX, centerY);
                 }
             }
@@ -368,8 +360,6 @@ namespace ImageCropper
                 }
                 else
                 {
-                    //_upperLeftThumb.X = _startX;
-                    //_upperLeftThumb.Y = _startY;
                     _upperLeftThumb.UpdatePosition(_startX, _startY);
                 }
             }
@@ -383,8 +373,6 @@ namespace ImageCropper
                 }
                 else
                 {
-                    //_upperRightThumb.X = _endX;
-                    //_upperRightThumb.Y = _startY;
                     _upperRightThumb.UpdatePosition(_endX, _startY);
                 }
             }
@@ -398,8 +386,6 @@ namespace ImageCropper
                 }
                 else
                 {
-                    //_lowerLeftThumb.X = _startX;
-                    //_lowerLeftThumb.Y = _endY;
                     _lowerLeftThumb.UpdatePosition(_startX, _endY);
                 }
             }
@@ -413,18 +399,35 @@ namespace ImageCropper
                 }
                 else
                 {
-                    //_lowerRigthThumb.X = _endX;
-                    //_lowerRigthThumb.Y = _endY;
                     _lowerRigthThumb.UpdatePosition(_endX, _endY);
                 }
             }
 
             if (animate)
             {
+                storyboard.Completed += (s, e) =>
+                {
+                    //移除整个演示图板来禁止动画影响属性，并会自动恢复此次动画前的位置，然后代码修改每个thumb位置
+                    storyboard.Remove();
+                    UpdateSelectedRect();
+                };
                 storyboard.Begin();
             }
 
             UpdateMaskArea(animate);
+        }
+        private void UpdateSelectedRect()
+        {
+            var centerX = ((_endX - _startX) / 2) + _startX;
+            var centerY = ((_endY - _startY) / 2) + _startY;
+            _topThumb.UpdatePosition(centerX, _startY);
+            _bottomThumb.UpdatePosition(centerX, _endY);
+            _leftThumb.UpdatePosition(_startX, centerY);
+            _rightThumb.UpdatePosition(_endX, centerY);
+            _upperLeftThumb.UpdatePosition(_startX, _startY);
+            _upperRightThumb.UpdatePosition(_endX, _startY);
+            _lowerLeftThumb.UpdatePosition(_startX, _endY);
+            _lowerRigthThumb.UpdatePosition(_endX, _endY);
         }
 
         /// <summary>

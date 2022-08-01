@@ -24,7 +24,7 @@ namespace ImageCropperDemo
         public MainWindow()
         {
             InitializeComponent();
-            ImageCropper.LoadImageFromFile(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"qedsd.jpg"));
+            ImageCropper.LoadImageFromFile(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "sine_wave_omega.jpg"));
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
