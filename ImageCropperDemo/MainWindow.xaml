@@ -1,10 +1,10 @@
 ﻿<Window
-    x:Class="ImageCropper.WPF.MainWindow"
+    x:Class="ImageCropperDemo.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:imagecropper="clr-namespace:ImageCropper;assembly=ImageCropper"
-    xmlns:local="clr-namespace:ImageCropper.WPF"
+    xmlns:local="clr-namespace:ImageCropperDemo"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="MainWindow"
     Width="800"

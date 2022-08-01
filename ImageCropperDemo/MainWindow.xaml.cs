@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ImageCropper.WPF
+namespace ImageCropperDemo
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -24,7 +24,7 @@ namespace ImageCropper.WPF
         public MainWindow()
         {
             InitializeComponent();
-            ImageCropper.LoadImageFromFile("ImageCropper.WPF;component/qedsd.jpg");
+            ImageCropper.LoadImageFromFile(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"qedsd.jpg"));
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {

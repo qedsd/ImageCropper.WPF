@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ImageCropper\ImageCropper.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="qedsd.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+	<!--<ItemGroup Condition="'$(TargetFramework)' == 'net6.0-windows'">
+		<Reference Include="ImageCropper, processorArchitecture=MSIL">
+			<SpecificVersion>False</SpecificVersion>
+			<HintPath>..\libs\net6.0-windows\ImageCropper.dll</HintPath>
+		</Reference>
+	</ItemGroup>-->
+</Project>
