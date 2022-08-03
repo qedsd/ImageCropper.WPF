@@ -24,15 +24,29 @@ namespace ImageCropperDemo
         public MainWindow()
         {
             InitializeComponent();
-            ImageCropper.LoadImageFromFile(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "sine_wave_omega.jpg"));
+            ImageCropperControl.LoadImageFromFile(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "sine_wave_omega.jpg"));
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog() == true)
             {
-                ImageCropper.LoadImageFromFile(openFileDialog.FileName);
+                ImageCropperControl.LoadImageFromFile(openFileDialog.FileName);
             }
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch((e.AddedItems[0] as ComboBoxItem).Content)
+            {
+                case "Rectangular": ImageCropperControl.CropShape = ImageCropper.CropShape.Rectangular;break;
+                case "Circular": ImageCropperControl.CropShape = ImageCropper.CropShape.Circular; break;
+            }
+        }
+
+        private void ClearImg_Click(object sender, RoutedEventArgs e)
+        {
+            ImageCropperControl.LoadImageFromFile(null);
         }
     }
 }
