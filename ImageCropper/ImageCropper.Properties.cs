@@ -69,6 +69,20 @@ namespace ImageCropper
             target.UpdateThumbsVisibility();
         }
 
+        private static void OnCropperEnableChanged(
+            DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var target = (ImageCropper)d;
+            if((bool)e.NewValue)
+            {
+                target.EnableCropper();
+            }
+            else
+            {
+                target.DisableCropper();
+            }
+        }
+
         /// <summary>
         ///  Gets or sets the source of the cropped image.
         /// </summary>
@@ -134,6 +148,16 @@ namespace ImageCropper
         }
 
         /// <summary>
+        /// 是否允许裁剪
+        /// false则隐藏裁剪相关显示，单纯显示图片
+        /// </summary>
+        public bool CropperEnable
+        {
+            get { return (bool)GetValue(CropperEnableProperty); }
+            set { SetValue(CropperEnableProperty, value); }
+        }
+
+        /// <summary>
         /// Identifies the <see cref="AspectRatio"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty AspectRatioProperty =
@@ -174,5 +198,8 @@ namespace ImageCropper
         /// </summary>
         public static readonly DependencyProperty ThumbPlacementProperty =
             DependencyProperty.Register(nameof(ThumbPlacement), typeof(ThumbPlacement), typeof(ImageCropper), new PropertyMetadata(default(ThumbPlacement), OnThumbPlacementChanged));
+
+        public static readonly DependencyProperty CropperEnableProperty =
+            DependencyProperty.Register(nameof(CropperEnable), typeof(bool), typeof(ImageCropper), new PropertyMetadata(true, OnCropperEnableChanged));
     }
 }

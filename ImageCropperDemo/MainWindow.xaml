@@ -13,7 +13,8 @@
     <Grid>
         <imagecropper:ImageCropper
             x:Name="ImageCropper"
-            CropShape="Circular"
+            CropShape="Rectangular"
+            CropperEnable="True"
             ThumbPlacement="All" />
         <Button
             Width="24"

@@ -265,12 +265,6 @@ namespace ImageCropper
             selectedRect.Union(CanvasRect);
             if (selectedRect != CanvasRect)
             {
-                //var croppedRect = _inverseImageTransform.TransformBounds(new Rect(startPoint,endPoint));
-                //croppedRect.Intersect(_restrictedCropRect);
-                //_currentCroppedRect = croppedRect;
-                //var viewportRect = GetUniformRect(CanvasRect, selectedRect.Width / selectedRect.Height);
-                //var viewportImgRect = _inverseImageTransform.TransformBounds(selectedRect);
-                //UpdateImageLayoutWithViewport(viewportRect, viewportImgRect);
                 UpdateSelectedRect(startPoint, endPoint);
             }
             else
@@ -457,12 +451,10 @@ namespace ImageCropper
         /// </summary>
         private void UpdateMaskArea(bool animate = false)
         {
-            if (_layoutGrid == null || _maskAreaGeometryGroup.Children.Count < 2)
+            if (_layoutGrid == null || _maskAreaGeometryGroup.Children.Count < 2 || !CropperEnable)
             {
                 return;
             }
-
-            //_outerGeometry.Rect = new Rect(-_layoutGrid.Padding.Left, -_layoutGrid.Padding.Top, _layoutGrid.ActualWidth, _layoutGrid.ActualHeight);
             _outerGeometry.Rect = new Rect(0, 0, _layoutGrid.ActualWidth, _layoutGrid.ActualHeight);
             switch (CropShape)
             {
@@ -472,15 +464,6 @@ namespace ImageCropper
                         var to = new Rect(new Point(_startX, _startY), new Point(_endX, _endY));
                         if (animate)
                         {
-                            //完成选取时会触发移动遮挡层范围的动画
-                            //var storyboard = new Storyboard();
-                            //storyboard.Children.Add(CreateRectangleAnimation(to, _animationDuration, rectangleGeometry));
-                            //storyboard.Completed += (s, e) =>
-                            //{
-                            //    storyboard.Remove();
-                            //    rectangleGeometry.Rect = to;
-                            //};
-                            //storyboard.Begin();
                             StartRectangleAnimation(to, _animationDuration, rectangleGeometry);
                         }
                         else
@@ -498,18 +481,6 @@ namespace ImageCropper
                         var radiusY = (_endY - _startY) / 2;
                         if (animate)
                         {
-                            //var storyboard = new Storyboard();
-                            //storyboard.Children.Add(CreatePointAnimation(center, _animationDuration, ellipseGeometry, nameof(EllipseGeometry.Center), true));
-                            //storyboard.Children.Add(CreateDoubleAnimation(radiusX, _animationDuration, ellipseGeometry, nameof(EllipseGeometry.RadiusX), true));
-                            //storyboard.Children.Add(CreateDoubleAnimation(radiusY, _animationDuration, ellipseGeometry, nameof(EllipseGeometry.RadiusY), true));
-                            //storyboard.Completed += (s, e) =>
-                            //{
-                            //    storyboard.Remove();
-                            //    ellipseGeometry.Center = center;
-                            //    ellipseGeometry.RadiusX = radiusX;
-                            //    ellipseGeometry.RadiusY = radiusY;
-                            //};
-                            //storyboard.Begin();
                             StartCircularAnimation(center, radiusX, radiusY, _animationDuration, ellipseGeometry);
                         }
                         else
@@ -591,6 +562,11 @@ namespace ImageCropper
         /// </summary>
         private void UpdateThumbsVisibility()
         {
+            if(!CropperEnable)
+            {
+                UpdateThumbsVisibility(Visibility.Collapsed);
+                return;
+            }
             var cornerThumbsVisibility = Visibility.Visible;
             var otherThumbsVisibility = Visibility.Visible;
             switch (ThumbPlacement)
@@ -685,6 +661,80 @@ namespace ImageCropper
                 _currentCroppedRect = croppedRect;
             }
             UpdateImageLayout(false);
+        }
+
+        /// <summary>
+        /// 允许裁剪
+        /// </summary>
+        private void EnableCropper()
+        {
+            UpdateThumbsVisibility();
+            EnableMaskArea();
+            var startPoint = new Point(_startX, _startY);
+            var endPoint = new Point(_endX, _endY);
+            UpdateSelectedRect(startPoint, endPoint);
+        }
+        /// <summary>
+        /// 不允许裁剪
+        /// </summary>
+        private void DisableCropper()
+        {
+            UpdateThumbsVisibility(Visibility.Collapsed);
+            DisableMaskArea();
+        }
+
+        private void UpdateThumbsVisibility(Visibility visibility)
+        {
+            if (_topThumb != null)
+            {
+                _topThumb.Visibility = visibility;
+            }
+
+            if (_bottomThumb != null)
+            {
+                _bottomThumb.Visibility = visibility;
+            }
+
+            if (_leftThumb != null)
+            {
+                _leftThumb.Visibility = visibility;
+            }
+
+            if (_rightThumb != null)
+            {
+                _rightThumb.Visibility = visibility;
+            }
+
+            if (_upperLeftThumb != null)
+            {
+                _upperLeftThumb.Visibility = visibility;
+            }
+
+            if (_upperRightThumb != null)
+            {
+                _upperRightThumb.Visibility = visibility;
+            }
+
+            if (_lowerLeftThumb != null)
+            {
+                _lowerLeftThumb.Visibility = visibility;
+            }
+
+            if (_lowerRigthThumb != null)
+            {
+                _lowerRigthThumb.Visibility = visibility;
+            }
+        }
+
+        private void EnableMaskArea()
+        {
+            _maskAreaGeometryGroup.Children.Add(_outerGeometry);
+            _maskAreaGeometryGroup.Children.Add(_innerGeometry);
+        }
+
+        private void DisableMaskArea()
+        {
+            _maskAreaGeometryGroup.Children.Clear();
         }
     }
 }
