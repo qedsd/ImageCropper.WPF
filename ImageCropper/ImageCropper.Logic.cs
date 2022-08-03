@@ -303,8 +303,8 @@ namespace ImageCropper
             {
                 if (animate)
                 {
-                    storyboard.Children.Add(CreateDoubleAnimation(centerX, _animationDuration, _topThumb, nameof(ImageCropperThumb.X), true));
-                    storyboard.Children.Add(CreateDoubleAnimation(_startY, _animationDuration, _topThumb, nameof(ImageCropperThumb.Y), true));
+                    storyboard.Children.Add(CreateDoubleAnimation(centerX, _animationDuration, _topThumb, nameof(ImageCropperThumb.X)));
+                    storyboard.Children.Add(CreateDoubleAnimation(_startY, _animationDuration, _topThumb, nameof(ImageCropperThumb.Y)));
                 }
                 else
                 {
@@ -316,8 +316,8 @@ namespace ImageCropper
             {
                 if (animate)
                 {
-                    storyboard.Children.Add(CreateDoubleAnimation(centerX, _animationDuration, _bottomThumb, nameof(ImageCropperThumb.X), true));
-                    storyboard.Children.Add(CreateDoubleAnimation(_endY, _animationDuration, _bottomThumb, nameof(ImageCropperThumb.Y), true));
+                    storyboard.Children.Add(CreateDoubleAnimation(centerX, _animationDuration, _bottomThumb, nameof(ImageCropperThumb.X)));
+                    storyboard.Children.Add(CreateDoubleAnimation(_endY, _animationDuration, _bottomThumb, nameof(ImageCropperThumb.Y)));
                 }
                 else
                 {
@@ -329,8 +329,8 @@ namespace ImageCropper
             {
                 if (animate)
                 {
-                    storyboard.Children.Add(CreateDoubleAnimation(_startX, _animationDuration, _leftThumb, nameof(ImageCropperThumb.X), true));
-                    storyboard.Children.Add(CreateDoubleAnimation(centerY, _animationDuration, _leftThumb, nameof(ImageCropperThumb.Y), true));
+                    storyboard.Children.Add(CreateDoubleAnimation(_startX, _animationDuration, _leftThumb, nameof(ImageCropperThumb.X)));
+                    storyboard.Children.Add(CreateDoubleAnimation(centerY, _animationDuration, _leftThumb, nameof(ImageCropperThumb.Y)));
                 }
                 else
                 {
@@ -342,8 +342,8 @@ namespace ImageCropper
             {
                 if (animate)
                 {
-                    storyboard.Children.Add(CreateDoubleAnimation(_endX, _animationDuration, _rightThumb, nameof(ImageCropperThumb.X), true));
-                    storyboard.Children.Add(CreateDoubleAnimation(centerY, _animationDuration, _rightThumb, nameof(ImageCropperThumb.Y), true));
+                    storyboard.Children.Add(CreateDoubleAnimation(_endX, _animationDuration, _rightThumb, nameof(ImageCropperThumb.X)));
+                    storyboard.Children.Add(CreateDoubleAnimation(centerY, _animationDuration, _rightThumb, nameof(ImageCropperThumb.Y)));
                 }
                 else
                 {
@@ -355,8 +355,8 @@ namespace ImageCropper
             {
                 if (animate)
                 {
-                    storyboard.Children.Add(CreateDoubleAnimation(_startX, _animationDuration, _upperLeftThumb, nameof(ImageCropperThumb.X), true));
-                    storyboard.Children.Add(CreateDoubleAnimation(_startY, _animationDuration, _upperLeftThumb, nameof(ImageCropperThumb.Y), true));
+                    storyboard.Children.Add(CreateDoubleAnimation(_startX, _animationDuration, _upperLeftThumb, nameof(ImageCropperThumb.X)));
+                    storyboard.Children.Add(CreateDoubleAnimation(_startY, _animationDuration, _upperLeftThumb, nameof(ImageCropperThumb.Y)));
                 }
                 else
                 {
@@ -368,8 +368,8 @@ namespace ImageCropper
             {
                 if (animate)
                 {
-                    storyboard.Children.Add(CreateDoubleAnimation(_endX, _animationDuration, _upperRightThumb, nameof(ImageCropperThumb.X), true));
-                    storyboard.Children.Add(CreateDoubleAnimation(_startY, _animationDuration, _upperRightThumb, nameof(ImageCropperThumb.Y), true));
+                    storyboard.Children.Add(CreateDoubleAnimation(_endX, _animationDuration, _upperRightThumb, nameof(ImageCropperThumb.X)));
+                    storyboard.Children.Add(CreateDoubleAnimation(_startY, _animationDuration, _upperRightThumb, nameof(ImageCropperThumb.Y)));
                 }
                 else
                 {
@@ -381,8 +381,8 @@ namespace ImageCropper
             {
                 if (animate)
                 {
-                    storyboard.Children.Add(CreateDoubleAnimation(_startX, _animationDuration, _lowerLeftThumb, nameof(ImageCropperThumb.X), true));
-                    storyboard.Children.Add(CreateDoubleAnimation(_endY, _animationDuration, _lowerLeftThumb, nameof(ImageCropperThumb.Y), true));
+                    storyboard.Children.Add(CreateDoubleAnimation(_startX, _animationDuration, _lowerLeftThumb, nameof(ImageCropperThumb.X)));
+                    storyboard.Children.Add(CreateDoubleAnimation(_endY, _animationDuration, _lowerLeftThumb, nameof(ImageCropperThumb.Y)));
                 }
                 else
                 {
@@ -394,8 +394,8 @@ namespace ImageCropper
             {
                 if (animate)
                 {
-                    storyboard.Children.Add(CreateDoubleAnimation(_endX, _animationDuration, _lowerRigthThumb, nameof(ImageCropperThumb.X), true));
-                    storyboard.Children.Add(CreateDoubleAnimation(_endY, _animationDuration, _lowerRigthThumb, nameof(ImageCropperThumb.Y), true));
+                    storyboard.Children.Add(CreateDoubleAnimation(_endX, _animationDuration, _lowerRigthThumb, nameof(ImageCropperThumb.X)));
+                    storyboard.Children.Add(CreateDoubleAnimation(_endY, _animationDuration, _lowerRigthThumb, nameof(ImageCropperThumb.Y)));
                 }
                 else
                 {
@@ -473,11 +473,15 @@ namespace ImageCropper
                         if (animate)
                         {
                             //完成选取时会触发移动遮挡层范围的动画
-                            //有bug，暂不启用，直接设置范围
                             //var storyboard = new Storyboard();
-                            //storyboard.Children.Add(CreateRectangleAnimation(to, _animationDuration, rectangleGeometry, true));
+                            //storyboard.Children.Add(CreateRectangleAnimation(to, _animationDuration, rectangleGeometry));
+                            //storyboard.Completed += (s, e) =>
+                            //{
+                            //    storyboard.Remove();
+                            //    rectangleGeometry.Rect = to;
+                            //};
                             //storyboard.Begin();
-                            rectangleGeometry.Rect = to;
+                            StartRectangleAnimation(to, _animationDuration, rectangleGeometry);
                         }
                         else
                         {
@@ -494,11 +498,19 @@ namespace ImageCropper
                         var radiusY = (_endY - _startY) / 2;
                         if (animate)
                         {
-                            var storyboard = new Storyboard();
-                            storyboard.Children.Add(CreatePointAnimation(center, _animationDuration, ellipseGeometry, nameof(EllipseGeometry.Center), true));
-                            storyboard.Children.Add(CreateDoubleAnimation(radiusX, _animationDuration, ellipseGeometry, nameof(EllipseGeometry.RadiusX), true));
-                            storyboard.Children.Add(CreateDoubleAnimation(radiusY, _animationDuration, ellipseGeometry, nameof(EllipseGeometry.RadiusY), true));
-                            storyboard.Begin();
+                            //var storyboard = new Storyboard();
+                            //storyboard.Children.Add(CreatePointAnimation(center, _animationDuration, ellipseGeometry, nameof(EllipseGeometry.Center), true));
+                            //storyboard.Children.Add(CreateDoubleAnimation(radiusX, _animationDuration, ellipseGeometry, nameof(EllipseGeometry.RadiusX), true));
+                            //storyboard.Children.Add(CreateDoubleAnimation(radiusY, _animationDuration, ellipseGeometry, nameof(EllipseGeometry.RadiusY), true));
+                            //storyboard.Completed += (s, e) =>
+                            //{
+                            //    storyboard.Remove();
+                            //    ellipseGeometry.Center = center;
+                            //    ellipseGeometry.RadiusX = radiusX;
+                            //    ellipseGeometry.RadiusY = radiusY;
+                            //};
+                            //storyboard.Begin();
+                            StartCircularAnimation(center, radiusX, radiusY, _animationDuration, ellipseGeometry);
                         }
                         else
                         {
