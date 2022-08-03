@@ -340,6 +340,10 @@ namespace ImageCropper
 
                 }
             }
+            else
+            {
+                Source = null;
+            }
         }
         //将Bitmap 转换成WriteableBitmap 
         public static WriteableBitmap BitmapToWriteableBitmap(System.Drawing.Bitmap src)
