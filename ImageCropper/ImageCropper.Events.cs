@@ -32,7 +32,7 @@ namespace ImageCropper
                     var safeDiffPoint = new Point(safePosition.X - imageCropperThumb.X, safePosition.Y - imageCropperThumb.Y);
                     UpdateCroppedRect(imageCropperThumb.Position, safeDiffPoint);
                 }
-                else//拖动图片，移动选取区域
+                else if(DragImgEnable)//拖动图片，移动选取区域
                 {
                     MoveSourceImage(StartPoint.X - endPos.X, StartPoint.Y - endPos.Y);
                 }

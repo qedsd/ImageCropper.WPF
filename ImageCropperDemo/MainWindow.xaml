@@ -15,6 +15,7 @@
             x:Name="ImageCropper"
             CropShape="Rectangular"
             CropperEnable="True"
+            DragImgEnable="True"
             ThumbPlacement="All" />
         <Button
             Width="24"

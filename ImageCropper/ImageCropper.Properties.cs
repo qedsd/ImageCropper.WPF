@@ -158,6 +158,15 @@ namespace ImageCropper
         }
 
         /// <summary>
+        /// 是否允许拖动图片
+        /// </summary>
+        public bool DragImgEnable
+        {
+            get { return (bool)GetValue(DragImgEnableProperty); }
+            set { SetValue(DragImgEnableProperty, value); }
+        }
+
+        /// <summary>
         /// Identifies the <see cref="AspectRatio"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty AspectRatioProperty =
@@ -201,5 +210,8 @@ namespace ImageCropper
 
         public static readonly DependencyProperty CropperEnableProperty =
             DependencyProperty.Register(nameof(CropperEnable), typeof(bool), typeof(ImageCropper), new PropertyMetadata(true, OnCropperEnableChanged));
+
+        public static readonly DependencyProperty DragImgEnableProperty =
+            DependencyProperty.Register(nameof(DragImgEnable), typeof(bool), typeof(ImageCropper), new PropertyMetadata(true));
     }
 }
