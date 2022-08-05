@@ -345,6 +345,20 @@ namespace ImageCropper
                 Source = null;
             }
         }
+
+        /// <summary>
+        /// Load an image from a stream.
+        /// </summary>
+        /// <param name="imageFile">The image stream.</param>
+        /// <returns></returns>
+        public void LoadImageFromStream(System.IO.Stream imageStream)
+        {
+            var bitmap = new System.Drawing.Bitmap(imageStream);
+            var wb = BitmapToWriteableBitmap(bitmap);
+            Source = wb;
+            bitmap.Dispose();
+        }
+
         //将Bitmap 转换成WriteableBitmap 
         public static WriteableBitmap BitmapToWriteableBitmap(System.Drawing.Bitmap src)
         {
