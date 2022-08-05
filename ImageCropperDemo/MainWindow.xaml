@@ -17,10 +17,7 @@
         </Grid.ColumnDefinitions>
         <imagecropper:ImageCropper
             x:Name="ImageCropperControl"
-            CropShape="Rectangular"
-            CropperEnable="True"
-            DragImgEnable="True"
-            ThumbPlacement="All"/>
+            CropperEnable="False"/>
         <StackPanel Grid.Column="1">
             <ComboBox
                 Margin="10"

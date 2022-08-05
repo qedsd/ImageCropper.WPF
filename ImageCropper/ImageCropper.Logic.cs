@@ -444,54 +444,78 @@ namespace ImageCropper
             _maskAreaGeometryGroup.Children.Add(_outerGeometry);
             _maskAreaGeometryGroup.Children.Add(_innerGeometry);
         }
-
+        /// <summary>
+        /// 禁用裁剪时的临时遮盖层
+        /// </summary>
+        private RectangleGeometry CropperEnableRect;
         /// <summary>
         /// Update the mask layer.
         /// 更新遮挡层位置
         /// </summary>
         private void UpdateMaskArea(bool animate = false)
         {
-            if (_layoutGrid == null || _maskAreaGeometryGroup.Children.Count < 2 || !CropperEnable)
+            if (_layoutGrid == null || _maskAreaGeometryGroup.Children.Count < 2)
             {
                 return;
             }
             _outerGeometry.Rect = new Rect(0, 0, _layoutGrid.ActualWidth, _layoutGrid.ActualHeight);
-            switch (CropShape)
+            if (!CropperEnable)
             {
-                case CropShape.Rectangular:
-                    if (_innerGeometry is RectangleGeometry rectangleGeometry)
-                    {
-                        var to = new Rect(new Point(_startX, _startY), new Point(_endX, _endY));
-                        if (animate)
+                if(CropperEnableRect == null)
+                {
+                    CropperEnableRect = new RectangleGeometry();
+                }
+                CropperEnableRect.Rect = _outerGeometry.Rect;//禁用裁剪时，内图形和外图形统一大小从而看起来隐藏了遮盖层
+                _maskAreaGeometryGroup.Children.Remove(_innerGeometry);
+                _innerGeometry = CropperEnableRect;
+                _maskAreaGeometryGroup.Children.Add(_innerGeometry);
+            }
+            else
+            {
+                switch (CropShape)
+                {
+                    case CropShape.Rectangular:
+                        if (_innerGeometry is RectangleGeometry rectangleGeometry)
                         {
-                            StartRectangleAnimation(to, _animationDuration, rectangleGeometry);
+                            var to = new Rect(new Point(_startX, _startY), new Point(_endX, _endY));
+                            if (animate)
+                            {
+                                StartRectangleAnimation(to, _animationDuration, rectangleGeometry);
+                            }
+                            else
+                            {
+                                rectangleGeometry.Rect = to;
+                            }
                         }
-                        else
-                        {
-                            rectangleGeometry.Rect = to;
-                        }
-                    }
 
-                    break;
-                case CropShape.Circular:
-                    if (_innerGeometry is EllipseGeometry ellipseGeometry)
-                    {
-                        var center = new Point(((_endX - _startX) / 2) + _startX, ((_endY - _startY) / 2) + _startY);
-                        var radiusX = (_endX - _startX) / 2;
-                        var radiusY = (_endY - _startY) / 2;
-                        if (animate)
+                        break;
+                    case CropShape.Circular:
+                        if(_innerGeometry is RectangleGeometry)
                         {
-                            StartCircularAnimation(center, radiusX, radiusY, _animationDuration, ellipseGeometry);
+                            //此时为禁用裁剪而使用的CropperEnableRect代替_innerGeometry，需要重新换回EllipseGeometry
+                            _maskAreaGeometryGroup.Children.Remove(_innerGeometry);
+                            _innerGeometry = new EllipseGeometry();
+                            _maskAreaGeometryGroup.Children.Add(_innerGeometry);
                         }
-                        else
+                        if (_innerGeometry is EllipseGeometry ellipseGeometry)
                         {
-                            ellipseGeometry.Center = center;
-                            ellipseGeometry.RadiusX = radiusX;
-                            ellipseGeometry.RadiusY = radiusY;
+                            var center = new Point(((_endX - _startX) / 2) + _startX, ((_endY - _startY) / 2) + _startY);
+                            var radiusX = (_endX - _startX) / 2;
+                            var radiusY = (_endY - _startY) / 2;
+                            if (animate)
+                            {
+                                StartCircularAnimation(center, radiusX, radiusY, _animationDuration, ellipseGeometry);
+                            }
+                            else
+                            {
+                                ellipseGeometry.Center = center;
+                                ellipseGeometry.RadiusX = radiusX;
+                                ellipseGeometry.RadiusY = radiusY;
+                            }
                         }
-                    }
 
-                    break;
+                        break;
+                }
             }
 
             _layoutGrid.Clip = new RectangleGeometry
@@ -669,7 +693,6 @@ namespace ImageCropper
         private void EnableCropper()
         {
             UpdateThumbsVisibility();
-            EnableMaskArea();
             var startPoint = new Point(_startX, _startY);
             var endPoint = new Point(_endX, _endY);
             UpdateSelectedRect(startPoint, endPoint);
@@ -680,7 +703,9 @@ namespace ImageCropper
         private void DisableCropper()
         {
             UpdateThumbsVisibility(Visibility.Collapsed);
-            DisableMaskArea();
+            var startPoint = new Point(_startX, _startY);
+            var endPoint = new Point(_endX, _endY);
+            UpdateSelectedRect(startPoint, endPoint);
         }
 
         private void UpdateThumbsVisibility(Visibility visibility)
@@ -724,17 +749,6 @@ namespace ImageCropper
             {
                 _lowerRigthThumb.Visibility = visibility;
             }
-        }
-
-        private void EnableMaskArea()
-        {
-            _maskAreaGeometryGroup.Children.Add(_outerGeometry);
-            _maskAreaGeometryGroup.Children.Add(_innerGeometry);
-        }
-
-        private void DisableMaskArea()
-        {
-            _maskAreaGeometryGroup.Children.Clear();
         }
     }
 }
