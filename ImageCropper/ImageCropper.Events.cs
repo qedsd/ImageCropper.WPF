@@ -32,7 +32,7 @@ namespace ImageCropper
                     var safeDiffPoint = new Point(safePosition.X - imageCropperThumb.X, safePosition.Y - imageCropperThumb.Y);
                     UpdateCroppedRect(imageCropperThumb.Position, safeDiffPoint);
                 }
-                else if(ThumbMode == ThumbMode.Draw && IsDrawingThumb)//移动鼠标绘制选择区
+                else if(CropperEnable && ThumbMode == ThumbMode.Draw && IsDrawingThumb)//移动鼠标绘制选择区
                 {
                     DrawingThumb(DrawingStartPoint, endPos);
                 }
@@ -68,6 +68,10 @@ namespace ImageCropper
                 }
 
                 UpdateImageLayout(true);
+                if(IsDrawingThumb)
+                {
+                    UpdateThumbsVisibility();
+                }
             }
             currentImageCropperThumb = null;
             IsDrawingThumb = false;

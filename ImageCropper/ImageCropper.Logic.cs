@@ -29,6 +29,10 @@ namespace ImageCropper
             }
 
             UpdateThumbsVisibility();
+            if(CropperEnable && ThumbMode == ThumbMode.Draw)
+            {
+                UpdateThumbsVisibility(Visibility.Collapsed);
+            }
         }
 
         /// <summary>

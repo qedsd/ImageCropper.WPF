@@ -161,6 +161,10 @@ namespace ImageCropper
             _lowerRigthThumb = GetTemplateChild(LowerRightThumbPartName) as ImageCropperThumb;
             HookUpEvents();
             UpdateThumbsVisibility();
+            if (CropperEnable && ThumbMode == ThumbMode.Draw)
+            {
+                UpdateThumbsVisibility(Visibility.Collapsed);
+            }
         }
 
         private void HookUpEvents()
@@ -455,6 +459,7 @@ namespace ImageCropper
         {
             if(ThumbMode == ThumbMode.Draw)
             {
+                UpdateThumbsVisibility(Visibility.Collapsed);
                 Reset();
                 DrawingStartPoint.X = 0;
                 DrawingStartPoint.Y = 0;

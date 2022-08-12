@@ -43,6 +43,10 @@ namespace ImageCropper
             target.InitImageLayout();
             //重置覆盖层
             target.Reset();
+            if (target.CropperEnable && target.ThumbMode == ThumbMode.Draw)
+            {
+                target.UpdateThumbsVisibility(Visibility.Collapsed);
+            }
         }
 
         private static void OnAspectRatioChanged(
@@ -76,6 +80,7 @@ namespace ImageCropper
             if((bool)e.NewValue)
             {
                 target.EnableCropper();
+                target.ResetDrawThumb();
             }
             else
             {
