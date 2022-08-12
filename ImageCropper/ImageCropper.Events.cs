@@ -42,6 +42,12 @@ namespace ImageCropper
                 }
                 StartPoint = e.GetPosition(_layoutGrid);
             }
+            else if(e.MiddleButton == MouseButtonState.Pressed && DragImgEnable)
+            {
+                var endPos = e.GetPosition(_layoutGrid);
+                MoveSourceImage(StartPoint.X - endPos.X, StartPoint.Y - endPos.Y);
+                StartPoint = e.GetPosition(_layoutGrid);
+            }
         }
         /// <summary>
         /// 整个控件布局鼠标抬起事件
@@ -90,15 +96,12 @@ namespace ImageCropper
         /// <param name="e"></param>
         private void SourceImage_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if(ThumbMode == ThumbMode.Draw && DrawingStartPoint.X == 0 && DrawingStartPoint.Y == 0)
+            if(ThumbMode == ThumbMode.Draw && e.LeftButton == MouseButtonState.Pressed && DrawingStartPoint.X == 0 && DrawingStartPoint.Y == 0)
             {
                 IsDrawingThumb = true;
                 DrawingStartPoint = e.GetPosition((UIElement)sender);
             }
-            else
-            {
-                StartPoint = e.GetPosition((UIElement)sender);
-            }
+            StartPoint = e.GetPosition((UIElement)sender);
         }
         /// <summary>
         /// 移动图片
