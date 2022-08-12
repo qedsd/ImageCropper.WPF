@@ -447,5 +447,19 @@ namespace ImageCropper
             UpdateImageLayout(true);
             return true;
         }
+
+        /// <summary>
+        /// ThumbMode.Draw模式下重新允许鼠标绘制
+        /// </summary>
+        public void ResetDrawThumb()
+        {
+            if(ThumbMode == ThumbMode.Draw)
+            {
+                Reset();
+                DrawingStartPoint.X = 0;
+                DrawingStartPoint.Y = 0;
+                IsDrawingThumb = false;
+            }
+        }
     }
 }

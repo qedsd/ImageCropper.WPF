@@ -17,7 +17,7 @@
         </Grid.ColumnDefinitions>
         <imagecropper:ImageCropper
             x:Name="ImageCropperControl"
-            CropperEnable="False"/>
+            ThumbMode="Draw"/>
         <StackPanel Grid.Column="1">
             <ComboBox
                 Margin="10"
@@ -44,6 +44,10 @@
                 Margin="10"
                 Click="ClearImg_Click"
                 Content="ClearImg" />
+            <Button
+                Margin="10"
+                Click="ResetDrawThumb_Click"
+                Content="ResetDrawThumb" />
         </StackPanel>
     </Grid>
 </Window>

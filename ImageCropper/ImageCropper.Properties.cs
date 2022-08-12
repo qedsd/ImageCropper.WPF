@@ -165,6 +165,16 @@ namespace ImageCropper
             get { return (bool)GetValue(DragImgEnableProperty); }
             set { SetValue(DragImgEnableProperty, value); }
         }
+        /// <summary>
+        /// 调整裁剪区域方式
+        /// Move拖拽Thumb
+        /// Draw鼠标绘制(绘制完成后会切换到Move的一般模式，如果需要重新通过鼠标绘制，调用ResetDrawThumb)
+        /// </summary>
+        public ThumbMode ThumbMode
+        {
+            get { return (ThumbMode)GetValue(ThumbModeProperty); }
+            set { SetValue(ThumbModeProperty, value); }
+        }
 
         /// <summary>
         /// Identifies the <see cref="AspectRatio"/> dependency property.
@@ -213,5 +223,8 @@ namespace ImageCropper
 
         public static readonly DependencyProperty DragImgEnableProperty =
             DependencyProperty.Register(nameof(DragImgEnable), typeof(bool), typeof(ImageCropper), new PropertyMetadata(true));
+
+        public static readonly DependencyProperty ThumbModeProperty =
+            DependencyProperty.Register(nameof(ThumbMode), typeof(ThumbMode), typeof(ImageCropper), new PropertyMetadata(ThumbMode.Move));
     }
 }

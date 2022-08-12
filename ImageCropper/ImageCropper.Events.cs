@@ -32,6 +32,10 @@ namespace ImageCropper
                     var safeDiffPoint = new Point(safePosition.X - imageCropperThumb.X, safePosition.Y - imageCropperThumb.Y);
                     UpdateCroppedRect(imageCropperThumb.Position, safeDiffPoint);
                 }
+                else if(ThumbMode == ThumbMode.Draw && IsDrawingThumb)//移动鼠标绘制选择区
+                {
+                    DrawingThumb(DrawingStartPoint, endPos);
+                }
                 else if(DragImgEnable)//拖动图片，移动选取区域
                 {
                     MoveSourceImage(StartPoint.X - endPos.X, StartPoint.Y - endPos.Y);
@@ -47,7 +51,7 @@ namespace ImageCropper
         /// <param name="e"></param>
         private void LayoutGrid_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (currentImageCropperThumb != null)
+            if (currentImageCropperThumb != null || IsDrawingThumb)
             {
                 var selectedRect = new Rect(new Point(_startX, _startY), new Point(_endX, _endY));
                 var croppedRect = _inverseImageTransform.TransformBounds(selectedRect);
@@ -60,6 +64,7 @@ namespace ImageCropper
                 UpdateImageLayout(true);
             }
             currentImageCropperThumb = null;
+            IsDrawingThumb = false;
         }
         /// <summary>
         /// 鼠标在控件布局上当次移动起始坐标
@@ -75,6 +80,8 @@ namespace ImageCropper
             currentImageCropperThumb = (ImageCropperThumb)sender;
             StartPoint = e.GetPosition(_layoutGrid);
         }
+        private bool IsDrawingThumb = false;
+        private Point DrawingStartPoint;
         /// <summary>
         /// 图片按下鼠标事件
         /// 开始拖动图片移动选取区域
@@ -83,7 +90,15 @@ namespace ImageCropper
         /// <param name="e"></param>
         private void SourceImage_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            StartPoint = e.GetPosition((UIElement)sender);
+            if(ThumbMode == ThumbMode.Draw && DrawingStartPoint.X == 0 && DrawingStartPoint.Y == 0)
+            {
+                IsDrawingThumb = true;
+                DrawingStartPoint = e.GetPosition((UIElement)sender);
+            }
+            else
+            {
+                StartPoint = e.GetPosition((UIElement)sender);
+            }
         }
         /// <summary>
         /// 移动图片

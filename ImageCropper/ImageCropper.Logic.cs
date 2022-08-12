@@ -750,5 +750,21 @@ namespace ImageCropper
                 _lowerRigthThumb.Visibility = visibility;
             }
         }
+
+        /// <summary>
+        /// 鼠标绘制选取框
+        /// </summary>
+        /// <param name="startPoint"></param>
+        /// <param name="curPoint"></param>
+        private void DrawingThumb(Point startPoint, Point curPoint)
+        {
+            double xmin = Math.Min(startPoint.X, curPoint.X);//最左边
+            double xmax = Math.Max(startPoint.X, curPoint.X);//最右边
+            double ymin = Math.Min(startPoint.Y, curPoint.Y);//最上边
+            double ymax = Math.Max(startPoint.Y, curPoint.Y);//最底下
+
+            _currentCroppedRect = new Rect(xmin, ymin, xmax - xmin, ymax - ymin);
+            UpdateSelectedRect(new Point(xmin,ymin), new Point(xmax, ymax), false);
+        }
     }
 }

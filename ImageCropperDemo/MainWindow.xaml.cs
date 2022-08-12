@@ -48,5 +48,10 @@ namespace ImageCropperDemo
         {
             ImageCropperControl.LoadImageFromFile(null);
         }
+
+        private void ResetDrawThumb_Click(object sender, RoutedEventArgs e)
+        {
+            ImageCropperControl.ResetDrawThumb();
+        }
     }
 }
